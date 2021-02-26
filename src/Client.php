@@ -9,6 +9,9 @@ class Client
 {
   const API_ENDPOINT = 'http://dev.kuponapi.kuponadmin.joynapok.hu';
 
+  /** @var KAPIClient\Endpoint\Bundle */
+  public $bundles;
+
   private $apiKey;
   private $httpClient;
 
@@ -16,6 +19,22 @@ class Client
   {
     $this->apiKey = $apiKey;
     $this->setHttpClient();
+
+    $this->bundles = new Endpoint\Bundle($this);
+  }
+
+  public function get(string $endpoint, array $params = [])
+  {
+    $options = (!empty($array) ? ['query' => $params] : []);
+
+    try {
+      $response = $this->httpClient->get($endpoint, $options);
+
+      return $this->handleResponse($response);
+    }
+    catch (\Exception $e) {
+      echo 'Error: ' . $e->getMessage();
+    }
   }
 
   public function test()
