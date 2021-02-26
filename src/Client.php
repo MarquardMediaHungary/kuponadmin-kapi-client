@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class Client
 {
-  const API_ENDPOINT = 'http://dev.kuponapi.kuponadmin.joynapok.hu';
+  const API_ENDPOINT = 'https://kuponapi.kuponadmin.joynapok.hu';
 
   /** @var KAPIClient\Endpoint\Bundle */
   public $bundles;
