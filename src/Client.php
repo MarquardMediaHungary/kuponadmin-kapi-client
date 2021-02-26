@@ -12,6 +12,9 @@ class Client
   /** @var KAPIClient\Endpoint\Bundle */
   public $bundles;
 
+  /** @var KAPIClient\Endpoint\Coupon */
+  public $coupons;
+
   private $apiKey;
   private $httpClient;
 
@@ -21,6 +24,7 @@ class Client
     $this->setHttpClient();
 
     $this->bundles = new Endpoint\Bundle($this);
+    $this->coupons = new Endpoint\Coupon($this);
   }
 
   public function get(string $endpoint, array $params = [])
