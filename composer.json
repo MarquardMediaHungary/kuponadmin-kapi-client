@@ -1,0 +1,21 @@
+{
+    "name": "mmdev/kuponapi-client",
+    "type": "library",
+    "description": "A kuponadmin publikus, kupon API-jával kommunikáló kliens",
+    "authors": [
+        {
+            "name": "Miheller Károly",
+            "email": "miheller.karoly@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "guzzlehttp/guzzle": "~7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "KAPIClient\\": "src/"
+        }
+    },
+    "license": "BSD-3-Clause"
+}
