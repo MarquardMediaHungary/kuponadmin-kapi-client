@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class Client
 {
-  const API_ENDPOINT = 'https://kuponapi.kuponadmin.joynapok.hu';
+  const API_ENDPOINT = 'http://dev.kuponapi.kuponadmin.joynapok.hu';
 
   /** @var KAPIClient\Endpoint\Bundle */
   public $bundles;
@@ -17,6 +17,9 @@ class Client
 
   /** @var KAPIClient\Endpoint\Category */
   public $categories;
+
+  /** @var KAPIClient\Endpoint\Mall */
+  public $malls;
 
   private $apiKey;
   private $httpClient;
@@ -29,6 +32,7 @@ class Client
     $this->bundles = new Endpoint\Bundle($this);
     $this->coupons = new Endpoint\Coupon($this);
     $this->categories = new Endpoint\Category($this);
+    $this->malls = new Endpoint\Mall($this);
   }
 
   public function get(string $endpoint, array $params = [])
