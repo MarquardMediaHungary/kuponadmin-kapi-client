@@ -18,6 +18,9 @@ class Client
   /** @var KAPIClient\Endpoint\Category */
   public $categories;
 
+  /** @var KAPIClient\Endpoint\Event */
+  public $events;
+
   /** @var KAPIClient\Endpoint\Mall */
   public $malls;
 
@@ -32,15 +35,30 @@ class Client
     $this->bundles = new Endpoint\Bundle($this);
     $this->coupons = new Endpoint\Coupon($this);
     $this->categories = new Endpoint\Category($this);
+    $this->events = new Endpoint\Event($this);
     $this->malls = new Endpoint\Mall($this);
   }
 
   public function get(string $endpoint, array $params = [])
   {
-    $options = (!empty($array) ? ['query' => $params] : []);
+    $options = (!empty($params) ? ['query' => $params] : []);
 
     try {
       $response = $this->httpClient->get($endpoint, $options);
+
+      return $this->handleResponse($response);
+    }
+    catch (\Exception $e) {
+      echo 'Error: ' . $e->getMessage();
+    }
+  }
+
+  public function post(string $endpoint, array $params = [])
+  {
+    $options = (!empty($params) ? ['json' => $params] : []);
+
+    try {
+      $response = $this->httpClient->post($endpoint, $options);
 
       return $this->handleResponse($response);
     }
@@ -65,6 +83,8 @@ class Client
   private function handleResponse(ResponseInterface $response)
   {
     $resp = json_decode($response->getBody(), true);
+
+    print_r($resp);exit;
 
     if (!isset($resp['success']) || !$resp['success']) {
       throw new \Exception(!empty($resp['error']) ? $resp['error'] : 'Unknown error');
