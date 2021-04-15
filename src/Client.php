@@ -84,8 +84,6 @@ class Client
   {
     $resp = json_decode($response->getBody(), true);
 
-    print_r($resp);exit;
-
     if (!isset($resp['success']) || !$resp['success']) {
       throw new \Exception(!empty($resp['error']) ? $resp['error'] : 'Unknown error');
     }
