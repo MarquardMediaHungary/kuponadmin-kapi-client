@@ -7,29 +7,45 @@ use Psr\Http\Message\ResponseInterface;
 
 class Client
 {
-  const API_ENDPOINT = 'https://kuponapi.kuponadmin.joynapok.hu';
+  const API_ENDPOINTS = [
+    'dev'   => 'http://dev.kuponapi.kuponadmin.joynapok.hu',
+    'test'  => 'https://test.kuponapi.kuponadmin.joynapok.hu',
+    'prod'  => 'https://kuponapi.kuponadmin.joynapok.hu',
+  ];
 
-  /** @var KAPIClient\Endpoint\Bundle */
+  /** @var \KAPIClient\Endpoint\Bundle */
   public $bundles;
 
-  /** @var KAPIClient\Endpoint\Coupon */
+  /** @var \KAPIClient\Endpoint\Coupon */
   public $coupons;
 
-  /** @var KAPIClient\Endpoint\Category */
+  /** @var \KAPIClient\Endpoint\Category */
   public $categories;
 
-  /** @var KAPIClient\Endpoint\Event */
+  /** @var \KAPIClient\Endpoint\Event */
   public $events;
 
-  /** @var KAPIClient\Endpoint\Mall */
+  /** @var \KAPIClient\Endpoint\Mall */
   public $malls;
 
   private $apiKey;
+  private $apiEndpoint;
   private $httpClient;
 
-  public function __construct(string $apiKey)
+  /**
+   *
+   * @param string $apiKey  API key
+   * @param string $env     'dev', 'test' or 'prod'
+   */
+  public function __construct(string $apiKey, string $env = 'prod')
   {
+    if (!isset(self::API_ENDPOINTS[$env])) {
+      echo 'Invalid "env" attribute in the KAPIClient constructor (dev, test or prod)';
+      exit;
+    }
+
     $this->apiKey = $apiKey;
+    $this->apiEndpoint = self::API_ENDPOINTS[$env];
     $this->setHttpClient();
 
     $this->bundles = new Endpoint\Bundle($this);
@@ -98,8 +114,8 @@ class Client
     ];
 
     $this->httpClient = new GuzzleClient([
-      'base_uri' => self::API_ENDPOINT,
-      'headers' => $headers
+      'base_uri'  => $this->apiEndpoint,
+      'headers'   => $headers
     ]);
   }
 }
