@@ -19,6 +19,9 @@ class Client
   /** @var \KAPIClient\Endpoint\Coupon */
   public $coupons;
 
+  /** @var \KAPIClient\Endpoint\CouponType */
+  public $couponTypes;
+
   /** @var \KAPIClient\Endpoint\Category */
   public $categories;
 
@@ -50,6 +53,7 @@ class Client
 
     $this->bundles = new Endpoint\Bundle($this);
     $this->coupons = new Endpoint\Coupon($this);
+    $this->couponTypes = new Endpoint\CouponType($this);
     $this->categories = new Endpoint\Category($this);
     $this->events = new Endpoint\Event($this);
     $this->malls = new Endpoint\Mall($this);
